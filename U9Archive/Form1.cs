@@ -22,10 +22,8 @@ namespace U9Archive
             var s = $"{12}+{23}={12 + 23}";
             string ss = s;
         }
-        private void Log(string s)
-        {
-            s = $"[{DateTime.Now}]{s}\r\n";
-        }
+       
+        
         private void btn_pt_Click(object sender, EventArgs e)
         {
             
@@ -40,9 +38,24 @@ namespace U9Archive
                 this.textBox1.Text = fbd.SelectedPath;
             }
         }
+        private void Log(string s)
+        {
+            s = $"[{DateTime.Now}]{s}\r\n";
+            ShowLogSetText(s);
+
+        }
+        private delegate void ShowLogSetTextCallback(string text);
         private void ShowLogSetText(string text)
         {
-
+            if (this.ShowLog.InvokeRequired)
+            {
+                ShowLogSetTextCallback d = new ShowLogSetTextCallback(ShowLogSetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.ShowLog.AppendText(text);
+            }
         }
     }
 }

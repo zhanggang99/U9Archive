@@ -1,0 +1,8 @@
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Form1.resources
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.csproj.GenerateResource.Cache
+D:\GitSource\U9Archive\U9Archive\bin\Debug\U9Archive.exe.config
+D:\GitSource\U9Archive\U9Archive\bin\Debug\U9Archive.exe
+D:\GitSource\U9Archive\U9Archive\bin\Debug\U9Archive.pdb
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Properties.Resources.resources
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.exe
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.pdb
