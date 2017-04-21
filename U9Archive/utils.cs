@@ -21,5 +21,14 @@ namespace U9Archive
             sw.Write(s);
             sw.Close();
         }
+
+        public static string GetStringFromFile(string filePath)
+        {
+            filePath = filePath.Replace("/", "\\");
+            StreamReader sr = new StreamReader(filePath, Encoding.Default);
+            string s = sr.ReadToEnd();
+            sr.Close();
+            return s;
+        }
     }
 }

@@ -31,6 +31,8 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.ShowLog = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.txt_current = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.Stop = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_archive = new System.Windows.Forms.TextBox();
@@ -54,8 +56,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txt_current = new System.Windows.Forms.TextBox();
             this.panel4.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -114,6 +114,25 @@
             this.panel2.Size = new System.Drawing.Size(1506, 199);
             this.panel2.TabIndex = 42;
             // 
+            // txt_current
+            // 
+            this.txt_current.Location = new System.Drawing.Point(482, 40);
+            this.txt_current.Margin = new System.Windows.Forms.Padding(4);
+            this.txt_current.Name = "txt_current";
+            this.txt_current.Size = new System.Drawing.Size(423, 28);
+            this.txt_current.TabIndex = 139;
+            this.txt_current.Text = "data source=zbh;initial catalog=v6;password=yonyou@123;user id=sa;";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(479, 12);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(170, 18);
+            this.label2.TabIndex = 138;
+            this.label2.Text = "当前数据库连接串：";
+            // 
             // Stop
             // 
             this.Stop.Location = new System.Drawing.Point(1291, 78);
@@ -123,6 +142,7 @@
             this.Stop.TabIndex = 57;
             this.Stop.Text = "停止";
             this.Stop.UseVisualStyleBackColor = true;
+            this.Stop.Click += new System.EventHandler(this.Stop_Click);
             // 
             // label4
             // 
@@ -344,25 +364,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1506, 768);
             this.panel1.TabIndex = 43;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(479, 12);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(170, 18);
-            this.label2.TabIndex = 138;
-            this.label2.Text = "当前数据库连接串：";
-            // 
-            // txt_current
-            // 
-            this.txt_current.Location = new System.Drawing.Point(482, 40);
-            this.txt_current.Margin = new System.Windows.Forms.Padding(4);
-            this.txt_current.Name = "txt_current";
-            this.txt_current.Size = new System.Drawing.Size(423, 28);
-            this.txt_current.TabIndex = 139;
-            this.txt_current.Text = "data source=zbh;initial catalog=v6;password=yonyou@123;user id=sa;";
             // 
             // Form1
             // 
