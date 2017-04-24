@@ -15,13 +15,17 @@ namespace U9Archive
     public static class SqlHelper
     {
         private static readonly string[] localhost = new[] { "localhost", ".", "(local)" };
-        private readonly static string connStr;//数据库连接字符串
+        private readonly static string connStr;//当前库：数据库连接字符串
+        private readonly static string hisconnStr;//历史库：数据库连接字符串
+
         static SqlHelper()
         {
-            var conn = System.Configuration.ConfigurationManager.ConnectionStrings["ConnStr"];
-            if (conn != null)
+            var conn = System.Configuration.ConfigurationManager.AppSettings["CurConnStr"];
+            var hisconn = System.Configuration.ConfigurationManager.AppSettings["HisConnStr"];
+            if (conn != null && hisconn!=null)
             {
-                connStr = conn.ConnectionString;
+                connStr = conn;
+                hisconnStr = hisconn;
             }
         }
 

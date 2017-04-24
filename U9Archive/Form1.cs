@@ -52,7 +52,7 @@ namespace U9Archive
             foreach (FileInfo fi in files)
             {
                 string ubfSql = utils.GetStringFromFile(fi.FullName);
-                int o = SqlHelper.ExecuteNonQuery("", null);
+                int o = SqlHelper.ExecuteNonQuery(ubfSql, null);
             }
             Log("完成UBF模块归档");
 
