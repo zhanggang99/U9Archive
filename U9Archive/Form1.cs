@@ -153,5 +153,35 @@ namespace U9Archive
             Interlocked.Exchange(ref m_ifThreadStoped, 1);
             return;
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (Interlocked.Equals(m_ifThreadStoped,0))
+            {
+                MessageBox.Show("请先停止当前正在进行的操作！");
+                return;
+            }
+            Interlocked.Exchange(ref m_ifThreadStoped, 0);
+            m_runThread = new Thread(new ThreadStart(RunCreateHisView));
+            m_runThread.Start();
+        }
+        private void RunCreateHisView()
+        {
+            try
+            {
+                int o = SqlHelper.ExecuteNonQuery("exec P_GetARInfo", null);
+                o = SqlHelper.ExecuteNonQuery("exec P_CreateHisView", null);
+                Log("创建实图成功");
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message);
+            }
+            finally
+            {
+                Interlocked.Exchange(ref m_ifThreadStoped, 1);
+            }
+            return;
+        }
     }
 }
