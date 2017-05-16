@@ -20,8 +20,6 @@ namespace U9Archive
         public Form1()
         {
             InitializeComponent();
-            var s = $"{12}+{23}={12 + 23}";
-            string ss = s;
         }
        
         
@@ -47,16 +45,24 @@ namespace U9Archive
 
             //开始执行ubf的脚本。
             DirectoryInfo fd = new DirectoryInfo(src);
-
-            FileInfo[] files = fd.GetFiles("*.sql");
-            foreach (FileInfo fi in files)
+            try
             {
-                string ubfSql = utils.GetStringFromFile(fi.FullName);
-                int o = SqlHelper.ExecuteNonQuery(ubfSql, null);
+                FileInfo[] files = fd.GetFiles("*.sql");
+                foreach (FileInfo fi in files)
+                {
+                    string ubfSql = utils.GetStringFromFile(fi.FullName);
+                    int o = SqlHelper.ExecuteNonQuery(ubfSql, null);
+                }
+                Log("UBF模块归档成功");
             }
-            Log("完成UBF模块归档");
-
-            Interlocked.Exchange(ref m_ifThreadStoped, 1);
+            catch
+            {
+                Log("UBF模块归档失败");
+            }
+            finally
+            {
+                Interlocked.Exchange(ref m_ifThreadStoped, 1);
+            }
             return;
 
         ExitHere:
@@ -97,6 +103,55 @@ namespace U9Archive
         private void Stop_Click(object sender, EventArgs e)
         {
             Interlocked.Exchange(ref m_ifThreadStoped, 1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (Interlocked.Equals(m_ifThreadStoped, 0))
+            {
+                MessageBox.Show("请先停止当前正在进行的操作！");
+                return;
+            }
+            Interlocked.Exchange(ref m_ifThreadStoped, 0);
+            m_runThread = new Thread(new ThreadStart(RunArchivePreSql));
+            m_runThread.Start();
+        }
+
+        private void RunArchivePreSql()
+        {
+            string src = this.textBox1.Text + "";
+            if (!Directory.Exists(src))
+            {
+                Log($"脚本路径不存在：+{src}");
+                goto ExitHere;
+            }
+
+            //开始执行ubf的脚本。
+            DirectoryInfo fd = new DirectoryInfo(src+ "\\PreSQL");
+            try
+            {
+                FileInfo[] files = fd.GetFiles("*.sql");
+                foreach (FileInfo fi in files)
+                {
+                    string ubfSql = utils.GetStringFromFile(fi.FullName);
+                    int o = SqlHelper.ExecuteNonQuery(ubfSql, null);
+                }
+                Log("创建归档记录表ARModuleHisLogd成功");
+            }
+            catch (Exception ex)
+            {
+                Log("创建归档记录表ARModuleHisLog失败");
+                Log(ex.Message);
+            }
+            finally
+            {
+                Interlocked.Exchange(ref m_ifThreadStoped, 1);
+            }
+            return;
+
+            ExitHere:
+            Interlocked.Exchange(ref m_ifThreadStoped, 1);
+            return;
         }
     }
 }

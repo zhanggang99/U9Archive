@@ -16,16 +16,17 @@ namespace U9Archive
     {
         private static readonly string[] localhost = new[] { "localhost", ".", "(local)" };
         private readonly static string connStr;//当前库：数据库连接字符串
-        private readonly static string hisconnStr;//历史库：数据库连接字符串
+        //private readonly static string hisconnStr;//历史库：数据库连接字符串 ：历史库数据卸载过程，从当前就直接执行完成。
 
         static SqlHelper()
         {
             var conn = System.Configuration.ConfigurationManager.AppSettings["CurConnStr"];
-            var hisconn = System.Configuration.ConfigurationManager.AppSettings["HisConnStr"];
-            if (conn != null && hisconn!=null)
+           // var hisconn = System.Configuration.ConfigurationManager.AppSettings["HisConnStr"];
+            //if (conn != null && hisconn!=null)
+            if (conn != null)
             {
                 connStr = conn;
-                hisconnStr = hisconn;
+                //hisconnStr = hisconn;
             }
         }
 

@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.panel4 = new System.Windows.Forms.Panel();
-            this.ShowLog = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
             this.Stop = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -47,8 +47,8 @@
             this.TongBuShiJianHuoDong = new System.Windows.Forms.Button();
             this.FaBuShiJianHuoDong = new System.Windows.Forms.Button();
             this.tongbuchinabaiweizuojia = new System.Windows.Forms.Button();
-            this.btn_fbmscd = new System.Windows.Forms.Button();
             this.btnTbTbja = new System.Windows.Forms.Button();
+            this.ShowLog = new System.Windows.Forms.RichTextBox();
             this.panel3 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -60,27 +60,18 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.panel2);
             this.panel4.Controls.Add(this.ShowLog);
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 37);
             this.panel4.Margin = new System.Windows.Forms.Padding(4);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(1149, 731);
+            this.panel4.Size = new System.Drawing.Size(1194, 731);
             this.panel4.TabIndex = 1;
-            // 
-            // ShowLog
-            // 
-            this.ShowLog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ShowLog.Location = new System.Drawing.Point(0, 0);
-            this.ShowLog.Margin = new System.Windows.Forms.Padding(4);
-            this.ShowLog.Name = "ShowLog";
-            this.ShowLog.ReadOnly = true;
-            this.ShowLog.Size = new System.Drawing.Size(1149, 731);
-            this.ShowLog.TabIndex = 0;
-            this.ShowLog.Text = "";
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.button2);
             this.panel2.Controls.Add(this.Stop);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.textBox1);
@@ -97,18 +88,28 @@
             this.panel2.Controls.Add(this.TongBuShiJianHuoDong);
             this.panel2.Controls.Add(this.FaBuShiJianHuoDong);
             this.panel2.Controls.Add(this.tongbuchinabaiweizuojia);
-            this.panel2.Controls.Add(this.btn_fbmscd);
             this.panel2.Controls.Add(this.btnTbTbja);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1149, 199);
-            this.panel2.TabIndex = 42;
+            this.panel2.Size = new System.Drawing.Size(1194, 199);
+            this.panel2.TabIndex = 43;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(690, 35);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(109, 35);
+            this.button2.TabIndex = 138;
+            this.button2.Text = "创建归档表";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // Stop
             // 
-            this.Stop.Location = new System.Drawing.Point(995, 35);
+            this.Stop.Location = new System.Drawing.Point(1093, 35);
             this.Stop.Margin = new System.Windows.Forms.Padding(4);
             this.Stop.Name = "Stop";
             this.Stop.Size = new System.Drawing.Size(84, 35);
@@ -119,23 +120,22 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(331, 35);
+            this.button1.Location = new System.Drawing.Point(495, 40);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(112, 35);
             this.button1.TabIndex = 41;
             this.button1.Text = "浏览";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(14, 40);
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(304, 28);
+            this.textBox1.Size = new System.Drawing.Size(455, 28);
             this.textBox1.TabIndex = 40;
-            this.textBox1.Text = "d:\\AR";
+            this.textBox1.Text = "E:\\todo\\20170321数据卸载V6方案\\新宝\\UBF";
             // 
             // label1
             // 
@@ -149,7 +149,7 @@
             // 
             // TongBuDongHuaCheng
             // 
-            this.TongBuDongHuaCheng.Location = new System.Drawing.Point(879, 107);
+            this.TongBuDongHuaCheng.Location = new System.Drawing.Point(874, 105);
             this.TongBuDongHuaCheng.Margin = new System.Windows.Forms.Padding(4);
             this.TongBuDongHuaCheng.Name = "TongBuDongHuaCheng";
             this.TongBuDongHuaCheng.Size = new System.Drawing.Size(200, 35);
@@ -159,7 +159,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(511, 107);
+            this.button4.Location = new System.Drawing.Point(495, 105);
             this.button4.Margin = new System.Windows.Forms.Padding(4);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(176, 35);
@@ -169,7 +169,7 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(695, 107);
+            this.button6.Location = new System.Drawing.Point(690, 105);
             this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(176, 35);
@@ -179,10 +179,10 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(695, 37);
+            this.button3.Location = new System.Drawing.Point(962, 35);
             this.button3.Margin = new System.Windows.Forms.Padding(4);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(200, 35);
+            this.button3.Size = new System.Drawing.Size(112, 35);
             this.button3.TabIndex = 85;
             this.button3.Text = "创建视图";
             this.button3.UseVisualStyleBackColor = true;
@@ -194,13 +194,13 @@
             this.btn_pt.Name = "btn_pt";
             this.btn_pt.Size = new System.Drawing.Size(138, 35);
             this.btn_pt.TabIndex = 84;
-            this.btn_pt.Text = "归档平台数据";
+            this.btn_pt.Text = "UBF";
             this.btn_pt.UseVisualStyleBackColor = true;
             this.btn_pt.Click += new System.EventHandler(this.btn_pt_Click);
             // 
             // btn_fbsjmq
             // 
-            this.btn_fbsjmq.Location = new System.Drawing.Point(171, 105);
+            this.btn_fbsjmq.Location = new System.Drawing.Point(170, 104);
             this.btn_fbsjmq.Margin = new System.Windows.Forms.Padding(4);
             this.btn_fbsjmq.Name = "btn_fbsjmq";
             this.btn_fbsjmq.Size = new System.Drawing.Size(140, 35);
@@ -210,7 +210,7 @@
             // 
             // btnBwlsrw
             // 
-            this.btnBwlsrw.Location = new System.Drawing.Point(879, 150);
+            this.btnBwlsrw.Location = new System.Drawing.Point(690, 147);
             this.btnBwlsrw.Margin = new System.Windows.Forms.Padding(4);
             this.btnBwlsrw.Name = "btnBwlsrw";
             this.btnBwlsrw.Size = new System.Drawing.Size(176, 35);
@@ -250,7 +250,7 @@
             // 
             // FaBuShiJianHuoDong
             // 
-            this.FaBuShiJianHuoDong.Location = new System.Drawing.Point(695, 150);
+            this.FaBuShiJianHuoDong.Location = new System.Drawing.Point(495, 150);
             this.FaBuShiJianHuoDong.Margin = new System.Windows.Forms.Padding(4);
             this.FaBuShiJianHuoDong.Name = "FaBuShiJianHuoDong";
             this.FaBuShiJianHuoDong.Size = new System.Drawing.Size(138, 35);
@@ -260,23 +260,13 @@
             // 
             // tongbuchinabaiweizuojia
             // 
-            this.tongbuchinabaiweizuojia.Location = new System.Drawing.Point(511, 33);
+            this.tongbuchinabaiweizuojia.Location = new System.Drawing.Point(807, 35);
             this.tongbuchinabaiweizuojia.Margin = new System.Windows.Forms.Padding(4);
             this.tongbuchinabaiweizuojia.Name = "tongbuchinabaiweizuojia";
-            this.tongbuchinabaiweizuojia.Size = new System.Drawing.Size(176, 35);
+            this.tongbuchinabaiweizuojia.Size = new System.Drawing.Size(147, 35);
             this.tongbuchinabaiweizuojia.TabIndex = 105;
             this.tongbuchinabaiweizuojia.Text = "同步表记录信息";
             this.tongbuchinabaiweizuojia.UseVisualStyleBackColor = true;
-            // 
-            // btn_fbmscd
-            // 
-            this.btn_fbmscd.Location = new System.Drawing.Point(511, 147);
-            this.btn_fbmscd.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_fbmscd.Name = "btn_fbmscd";
-            this.btn_fbmscd.Size = new System.Drawing.Size(138, 35);
-            this.btn_fbmscd.TabIndex = 98;
-            this.btn_fbmscd.Text = "归档";
-            this.btn_fbmscd.UseVisualStyleBackColor = true;
             // 
             // btnTbTbja
             // 
@@ -288,6 +278,17 @@
             this.btnTbTbja.Text = "归档";
             this.btnTbTbja.UseVisualStyleBackColor = true;
             // 
+            // ShowLog
+            // 
+            this.ShowLog.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.ShowLog.Location = new System.Drawing.Point(0, 207);
+            this.ShowLog.Margin = new System.Windows.Forms.Padding(4);
+            this.ShowLog.Name = "ShowLog";
+            this.ShowLog.ReadOnly = true;
+            this.ShowLog.Size = new System.Drawing.Size(1194, 524);
+            this.ShowLog.TabIndex = 0;
+            this.ShowLog.Text = "";
+            // 
             // panel3
             // 
             this.panel3.Controls.Add(this.label3);
@@ -295,7 +296,7 @@
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Margin = new System.Windows.Forms.Padding(4);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1149, 37);
+            this.panel3.Size = new System.Drawing.Size(1194, 37);
             this.panel3.TabIndex = 0;
             // 
             // label3
@@ -316,15 +317,14 @@
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1149, 768);
+            this.panel1.Size = new System.Drawing.Size(1194, 768);
             this.panel1.TabIndex = 43;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1149, 768);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(1194, 768);
             this.Controls.Add(this.panel1);
             this.Name = "Form1";
             this.Text = "新宝归档工具";
@@ -341,7 +341,11 @@
         #endregion
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.RichTextBox ShowLog;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button Stop;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBox1;
@@ -358,11 +362,7 @@
         private System.Windows.Forms.Button TongBuShiJianHuoDong;
         private System.Windows.Forms.Button FaBuShiJianHuoDong;
         private System.Windows.Forms.Button tongbuchinabaiweizuojia;
-        private System.Windows.Forms.Button btn_fbmscd;
         private System.Windows.Forms.Button btnTbTbja;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Panel panel1;
     }
 }
 
