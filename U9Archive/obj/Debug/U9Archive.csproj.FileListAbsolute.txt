@@ -7,3 +7,4 @@ D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Properties.Resources.resour
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.exe
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.pdb
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.csprojResolveAssemblyReference.cache
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Form2.resources
