@@ -27,7 +27,7 @@ namespace U9Archive
         //迁移评估
         private void button1_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("ddd");
+
         }
 
         //开始迁移
