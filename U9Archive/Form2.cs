@@ -139,7 +139,6 @@ namespace U9Archive
         //    DataWrite dataWrite = new DataWrite();
         //    dataWrite.UpdateUIDelegate += UpdataUIStatus;//绑定更新任务状态的委托
         //    dataWrite.TaskCallBack += Accomplish;//绑定完成任务要调用的委托
-
         //    Thread thread = new Thread(new ParameterizedThreadStart(dataWrite.Write));
         //    thread.IsBackground = true;
         //    thread.Start(taskCount);
@@ -160,7 +159,6 @@ namespace U9Archive
                 this.rtbTxt.Text += "100";
             }
         }
-
         delegate void AsynAccomplishCallBack(string text);
 
         //完成任务时需要调用
@@ -174,7 +172,6 @@ namespace U9Archive
                 }),txt);
             }
             else
-
             //还可以进行其他的一些完任务完成之后的逻辑处理
                 this.rtbTxt.Text+=txt;
         }
