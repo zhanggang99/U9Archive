@@ -46,13 +46,23 @@ namespace U9Archive
             {
                 if (!treeU9Menu.Nodes.ContainsKey(item.Module))
                 {
-                    treeU9Menu.Nodes.Add(item.Module,item.Module);
-                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(item.ModuleValue,item.ModuleValue);
+                    TreeNode tp = new TreeNode(item.Module);
+                    tp.Tag = 0;
+                    tp.Name = item.Module;
+                    treeU9Menu.Nodes.Add(tp);
+
+                    TreeNode tn = new TreeNode(item.ModuleValue);
+                    tn.Tag = 1;
+                    tn.Name = item.ModuleValue;
+                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(tn);
                         
                 }
                 else
                 {
-                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(item.ModuleValue, item.ModuleValue);
+                    TreeNode tn = new TreeNode(item.ModuleValue);
+                    tn.Tag = 1;
+                    tn.Name = item.ModuleValue;
+                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(tn);
                 }
             }
         }
@@ -60,6 +70,14 @@ namespace U9Archive
         private void treeU9Menu_AfterCheck(object sender, TreeViewEventArgs e)
         {
             CheckNodes(e.Node);
+        }
+
+        private void doWithGrid(TreeNode tn)
+        {
+            if (tn.Checked)
+            {
+                dgvU9.DataSource = "";
+            }
         }
 
         private void CheckNodes(TreeNode checkRoot)

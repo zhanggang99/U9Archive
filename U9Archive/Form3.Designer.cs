@@ -36,7 +36,7 @@
             this.btnComputer = new System.Windows.Forms.Button();
             this.btnStop = new System.Windows.Forms.Button();
             this.btnStart = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvU9 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -44,7 +44,7 @@
             this.Columns = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column5 = new System.Windows.Forms.DataGridViewButtonColumn();
             this.迁移 = new System.Windows.Forms.DataGridViewButtonColumn();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvU9)).BeginInit();
             this.SuspendLayout();
             // 
             // treeU9Menu
@@ -120,12 +120,12 @@
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
-            // dataGridView1
+            // dgvU9
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvU9.AllowUserToAddRows = false;
+            this.dgvU9.AllowUserToDeleteRows = false;
+            this.dgvU9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvU9.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
@@ -133,12 +133,12 @@
             this.Columns,
             this.Column5,
             this.迁移});
-            this.dataGridView1.Location = new System.Drawing.Point(235, 74);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(770, 575);
-            this.dataGridView1.TabIndex = 21;
+            this.dgvU9.Location = new System.Drawing.Point(235, 74);
+            this.dgvU9.Name = "dgvU9";
+            this.dgvU9.ReadOnly = true;
+            this.dgvU9.RowTemplate.Height = 23;
+            this.dgvU9.Size = new System.Drawing.Size(770, 575);
+            this.dgvU9.TabIndex = 21;
             // 
             // Column1
             // 
@@ -187,7 +187,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 661);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvU9);
             this.Controls.Add(this.btnComputer);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
@@ -198,7 +198,7 @@
             this.Controls.Add(this.treeU9Menu);
             this.Name = "Form3";
             this.Text = "Form3";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvU9)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -214,7 +214,7 @@
         private System.Windows.Forms.Button btnComputer;
         private System.Windows.Forms.Button btnStop;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvU9;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
