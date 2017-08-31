@@ -6,7 +6,7 @@ D:\GitSource\U9Archive\U9Archive\bin\Debug\U9Archive.pdb
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Properties.Resources.resources
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.exe
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.pdb
-D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.csprojResolveAssemblyReference.cache
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Form2.resources
-D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.ArItem.resources
 D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Form4.resources
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.Form3.resources
+D:\GitSource\U9Archive\U9Archive\obj\Debug\U9Archive.csproj.CoreCompileInputs.cache

@@ -138,4 +138,10 @@ namespace U9Archive
         public string begindate { get; set; }
         public int count { get; set; }
     }
+    public class ArItem
+    {
+        public string arProc { get; set; }
+        public string lb { get; set; }
+    }
+
 }
