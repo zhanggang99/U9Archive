@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace U9Archive
 {
@@ -18,11 +22,15 @@ namespace U9Archive
         public static CancellationTokenSource tokenSource = new CancellationTokenSource();
         public static CancellationToken token = tokenSource.Token;
         public static string arDate = "2016-01-01";
+
+        private ARParaInfo arInfo;//记录了归档库（迁移库）和当前库的连接信息。
+        private ARModuleInfo arModules;
+
         public Form4()
         {
             InitializeComponent();
-            list2.Add(new ArItem { arProc = "ubf2017101", lb = "label1" });
-            list2.Add(new ArItem { arProc = "pm20170101", lb = "label2" });
+            list2.Add(new ArItem { arProc = "ubf2017101", Potisoon = "label1" });
+            list2.Add(new ArItem { arProc = "pm20170101", Potisoon = "label2" });
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -89,7 +97,7 @@ namespace U9Archive
         private void arshuju2(ArItem aritem)
         {
             int account = 1;
-            Jeguo result;
+            Result result;
 
             Task.Run(() =>
             {
@@ -98,23 +106,23 @@ namespace U9Archive
                     try
                     {
                         result = ExecSQL(aritem);
-                        UpdateCount(result, aritem.lb);
+                        UpdateCount(result, aritem.Potisoon);
                         account = result.count;//返回本次归档的单据数量。
                     }
                     catch (Exception)
                     {
-                        UpdateCount(new Jeguo() { begindate = "1991", count = -1 }, aritem.lb);
+                        UpdateCount(new Result() { begindate = "1991", count = -1 }, aritem.Potisoon);
                     }
                 } while (account > 400);
             }).ContinueWith((t) =>
             {
                 Thread.Sleep(2000);
-                UpdateCount(new Jeguo { begindate = "2016-01-03", count = -5 }, aritem.lb);
+                UpdateCount(new Result { begindate = "2016-01-03", count = -5 }, aritem.Potisoon);
             });
 
         }
 
-        private void UpdateCount(Jeguo recodeCount, string lb)
+        private void UpdateCount(Result recodeCount, string lb)
         {
             BeginInvoke(new Action(() =>
             {
@@ -125,23 +133,14 @@ namespace U9Archive
                 this.Controls.Find(lb, true)[0].Text = recodeCount.count.ToString();
             }));
         }
-        private Jeguo ExecSQL(ArItem ai)
+        private Result ExecSQL(ArItem ai)
         {
             var rand = new Random();
-            Thread.Sleep(rand.Next(500, 5000));
+            Thread.Sleep(rand.Next(500, 2000));
 
-            return new Jeguo { begindate = "2016-01-01", count = rand.Next(300, 3000) };
+            return new Result { begindate = "2016-01-01", count = rand.Next(300, 3000) };
         }
     }
-    public class Jeguo
-    {
-        public string begindate { get; set; }
-        public int count { get; set; }
-    }
-    public class ArItem
-    {
-        public string arProc { get; set; }
-        public string lb { get; set; }
-    }
+
 
 }
