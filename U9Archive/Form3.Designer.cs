@@ -28,16 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("工作流");
-            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("个性化模板");
-            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("日志数据");
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("平台数据", new System.Windows.Forms.TreeNode[] {
-            treeNode1,
-            treeNode2,
-            treeNode3});
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("标准采购");
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("标准销售");
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("生产管理");
             this.treeU9Menu = new System.Windows.Forms.TreeView();
             this.label1 = new System.Windows.Forms.Label();
             this.arDate = new System.Windows.Forms.DateTimePicker();
@@ -62,27 +52,9 @@
             this.treeU9Menu.CheckBoxes = true;
             this.treeU9Menu.Location = new System.Drawing.Point(12, 12);
             this.treeU9Menu.Name = "treeU9Menu";
-            treeNode1.Name = "节点4";
-            treeNode1.Text = "工作流";
-            treeNode2.Name = "节点5";
-            treeNode2.Text = "个性化模板";
-            treeNode3.Name = "节点6";
-            treeNode3.Text = "日志数据";
-            treeNode4.Name = "节点0";
-            treeNode4.Text = "平台数据";
-            treeNode5.Name = "节点1";
-            treeNode5.Text = "标准采购";
-            treeNode6.Name = "节点2";
-            treeNode6.Text = "标准销售";
-            treeNode7.Name = "节点3";
-            treeNode7.Text = "生产管理";
-            this.treeU9Menu.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode4,
-            treeNode5,
-            treeNode6,
-            treeNode7});
             this.treeU9Menu.Size = new System.Drawing.Size(191, 637);
             this.treeU9Menu.TabIndex = 13;
+            this.treeU9Menu.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeU9Menu_AfterCheck);
             // 
             // label1
             // 

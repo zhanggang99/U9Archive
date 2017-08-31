@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<MigrateRoot>
+  <MigrateItems>
+    <MigrateItem ModuleKey="PM" ModuleValue="PM模块" Module="供应链" EvaluateSql="" MigrateSql=""  />
+    <MigrateItem ModuleKey="SM" ModuleValue="SM模块" Module="供应链" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="IC" ModuleValue="IC模块" Module="成本管理" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="SFC" ModuleValue="SFC模块" Module="生产制造" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="AR" ModuleValue="AR模块" Module="财务" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="CA" ModuleValue="CA模块" Module="成本管理" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="TB" ModuleValue="TB模块" Module="财务" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="AAI" ModuleValue="AAI模块" Module="成本管理" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="InvTrans" ModuleValue="InvTrans模块" Module="成本管理" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="INV" ModuleValue="INV模块" Module="供应链" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="AP" ModuleValue="AP模块" Module="财务" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="MRP" ModuleValue="MRP模块" Module="生产制造" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="MO" ModuleValue="MO模块" Module="生产制造" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="UBF" ModuleValue="UBF模块" Module="系统管理" EvaluateSql="" MigrateSql=""/>
+    <MigrateItem ModuleKey="WorkFlow" ModuleValue="WorkFlow模块" Module="系统管理" EvaluateSql="" MigrateSql=""/>
+   </MigrateItems>
+  <MigrateCustomConfigurations>
+    <Item Key="IsTest" Value="false" />
+  </MigrateCustomConfigurations>
+</MigrateRoot>

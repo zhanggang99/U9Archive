@@ -17,9 +17,11 @@ namespace U9Archive
 {
     public partial class Form3 : Form
     {
+        //todo: 1.树控制加载处理。2.树控制与右边列表同步。 3。列表控件加载时，右边【评估】、【】
         public Form3()
         {
             InitializeComponent();
+            LoadTree();
         }
 
         private void btnComputer_Click(object sender, EventArgs e)
@@ -40,55 +42,48 @@ namespace U9Archive
         //加载tree控件树
         private void LoadTree()
         {
+            foreach (var item in MigrateModuleInfo.Instance.MigrateModules)
+            {
+                if (!treeU9Menu.Nodes.ContainsKey(item.Module))
+                {
+                    treeU9Menu.Nodes.Add(item.Module,item.Module);
+                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(item.ModuleValue,item.ModuleValue);
+                        
+                }
+                else
+                {
+                    treeU9Menu.Nodes.Find(item.Module, false)[0].Nodes.Add(item.ModuleValue, item.ModuleValue);
+                }
+            }
+        }
 
+        private void treeU9Menu_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+            CheckNodes(e.Node);
+        }
+
+        private void CheckNodes(TreeNode checkRoot)
+        {
+            foreach (TreeNode tn in checkRoot.Nodes)
+            {
+                tn.Checked = checkRoot.Checked;
+            }
         }
     }
-
-    public class Result
-    {
-        public string begindate { get; set; }
-        public int count { get; set; }
-    }
-    public class ArItem
-    {
-        public string arProc { get; set; }
-        public string Potisoon { get; set; }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /// <summary>
     /// 数据迁移配置文件
     /// </summary>
-    public class ARModuleInfo
+    public class MigrateModuleInfo
     {
         private static readonly object _syncLock = new object();
 
         private static bool bFwatchRun = false;
-        private static ARModuleInfo m_ARMigrate;
+        private static MigrateModuleInfo m_Migrate;
 
-        //所有未迁移的模块
-        public List<MigrateModuleInfo> RestModules { get; set; }
-        //所有选择要迁移的模块
-        public List<MigrateModuleInfo> TodoModules { get; set; }
-        //所有已迁移的模块
-        public List<MigrateModuleInfo> DoneModules { get; set; }
+        //所有迁移模块
+        public List<MigrateModuleItem> MigrateModules = new List<MigrateModuleItem>();
         private System.Collections.Specialized.HybridDictionary m_CustomConfig = new System.Collections.Specialized.HybridDictionary();
         public System.Collections.Specialized.HybridDictionary CustomConfig
         {
@@ -98,26 +93,26 @@ namespace U9Archive
             }
         }
 
-        public static ARModuleInfo Instance
+        public static MigrateModuleInfo Instance
         {
             get
             {
-                if (m_ARMigrate != null)
+                if (m_Migrate != null)
                 {
-                    return m_ARMigrate;
+                    return m_Migrate;
                 }
                 lock (_syncLock)
                 {
-                    if (m_ARMigrate == null)
+                    if (m_Migrate == null)
                     {
-                        m_ARMigrate = new ARModuleInfo();
+                        m_Migrate = new MigrateModuleInfo();
                     }
-                    return m_ARMigrate;
+                    return m_Migrate;
                 }
             }
         }
 
-        ARModuleInfo()
+        MigrateModuleInfo()
         {
             this.Load();
         }
@@ -141,17 +136,12 @@ namespace U9Archive
             XmlDocument dom = new XmlDocument();
             dom.Load(FileName);
 
-            XmlNode rootnode = dom.SelectSingleNode("ARRoot/ARMigrateRestItems");
+            XmlNode rootnode = dom.SelectSingleNode("MigrateRoot/MigrateItems");
             LoadModuleItem(rootnode);
 
-            rootnode = dom.SelectSingleNode("ARRoot/ARMigrateToDoItems");
-            LoadModuleItem(rootnode);
-
-            rootnode = dom.SelectSingleNode("ARRoot/ARMigrateDoneItems");
-            LoadModuleItem(rootnode);
 
             //自定义配置，配置为测试环境等。
-            rootnode = dom.SelectSingleNode("ARRoot/ARCustomConfigurations");
+            rootnode = dom.SelectSingleNode("MigrateRoot/MigrateCustomConfigurations");
             LoadCustomConfigurations(rootnode);
         }
         private void LoadCustomConfigurations(XmlNode rootnode)
@@ -184,25 +174,22 @@ namespace U9Archive
 
             foreach (XmlNode node in rootnode.ChildNodes)
             {
-                if (node.Name != "ARItem") continue;
+                if (node.Name != "MigrateItem") continue;
 
-                MigrateModuleInfo sp = new MigrateModuleInfo();
+                MigrateModuleItem sp = new MigrateModuleItem();
 
-                if (node.Attributes["key"] != null)
-                    sp.ModuleKey = node.Attributes["key"].Value;
-                if (node.Attributes["value"] != null)
-                    sp.ModuleValue = node.Attributes["value"].Value;
+                if (node.Attributes["ModuleKey"] != null)
+                    sp.ModuleKey = node.Attributes["ModuleKey"].Value;
+                if (node.Attributes["ModuleValue"] != null)
+                    sp.ModuleValue = node.Attributes["ModuleValue"].Value;
+                if (node.Attributes["Module"] != null)
+                    sp.Module = node.Attributes["Module"].Value;
                 if (node.Attributes["MigrateSql"] != null)
                     sp.ModuleMigrateSql = node.Attributes["MigrateSql"].Value;
                 if (node.Attributes["EvaluateSql"] != null)
                     sp.ModuleEvaluateSql = node.Attributes["EvaluateSql"].Value;
 
-                if (rootnode.Name == "ARMigrateRestItems")
-                    RestModules.Add(sp);
-                else if (rootnode.Name == "ARMigrateToDoItems")
-                    TodoModules.Add(sp);
-                else if (rootnode.Name == "ARMigrateDoneItems")
-                    DoneModules.Add(sp);
+                MigrateModules.Add(sp);
             }
         }
         private void ReLoad()
@@ -210,20 +197,20 @@ namespace U9Archive
             Thread.Sleep(2000);
             lock (_syncLock)
             {
-                m_ARMigrate = new ARModuleInfo();
+                m_Migrate = new MigrateModuleInfo();
             }
         }
 
     }
 
-    public class MigrateModuleInfo
+    public class MigrateModuleItem
     {
         public string ModuleKey { get; set; }
         public string ModuleValue { get; set; }
+        public string Module { get; set; }
         public string ModuleMigrateSql { get; set; }
         public string ModuleEvaluateSql { get; set; }
     }
-    //1。增加匹配文件，项目：迁移模块、迁移存储过程、评估存储过程、恢复单据存储过程
     /// <summary>
     /// 归档入口参数
     /// </summary>

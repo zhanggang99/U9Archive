@@ -24,7 +24,7 @@ namespace U9Archive
         public static string arDate = "2016-01-01";
 
         private ARParaInfo arInfo;//记录了归档库（迁移库）和当前库的连接信息。
-        private ARModuleInfo arModules;
+        private MigrateModuleInfo arModules;
 
         public Form4()
         {
@@ -142,5 +142,15 @@ namespace U9Archive
         }
     }
 
+    public class ArItem
+    {
+        public string arProc { get; set; }
+        public string Potisoon { get; set; }
+    }
 
+    public class Result
+    {
+        public string begindate { get; set; }
+        public int count { get; set; }
+    }
 }
