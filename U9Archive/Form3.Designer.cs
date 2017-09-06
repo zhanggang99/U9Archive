@@ -33,17 +33,7 @@
             this.arDate = new System.Windows.Forms.DateTimePicker();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.btnComputer = new System.Windows.Forms.Button();
-            this.btnStop = new System.Windows.Forms.Button();
-            this.btnStart = new System.Windows.Forms.Button();
             this.dgvU9 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Columns = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.迁移 = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvU9)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,108 +79,26 @@
             this.label4.TabIndex = 16;
             this.label4.Text = "选择迁入历史库：";
             // 
-            // btnComputer
-            // 
-            this.btnComputer.Location = new System.Drawing.Point(233, 45);
-            this.btnComputer.Name = "btnComputer";
-            this.btnComputer.Size = new System.Drawing.Size(75, 23);
-            this.btnComputer.TabIndex = 20;
-            this.btnComputer.Text = "迁移评估";
-            this.btnComputer.UseVisualStyleBackColor = true;
-            this.btnComputer.Click += new System.EventHandler(this.btnComputer_Click);
-            // 
-            // btnStop
-            // 
-            this.btnStop.Location = new System.Drawing.Point(458, 45);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
-            this.btnStop.TabIndex = 19;
-            this.btnStop.Tag = "";
-            this.btnStop.Text = "停止迁移";
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
-            // btnStart
-            // 
-            this.btnStart.Location = new System.Drawing.Point(349, 45);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
-            this.btnStart.TabIndex = 18;
-            this.btnStart.Text = "开始迁移";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
-            // 
             // dgvU9
             // 
             this.dgvU9.AllowUserToAddRows = false;
             this.dgvU9.AllowUserToDeleteRows = false;
             this.dgvU9.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvU9.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Columns,
-            this.Column5,
-            this.迁移});
             this.dgvU9.Location = new System.Drawing.Point(235, 74);
             this.dgvU9.Name = "dgvU9";
             this.dgvU9.ReadOnly = true;
+            this.dgvU9.RowHeadersVisible = false;
             this.dgvU9.RowTemplate.Height = 23;
-            this.dgvU9.Size = new System.Drawing.Size(770, 575);
+            this.dgvU9.Size = new System.Drawing.Size(740, 575);
             this.dgvU9.TabIndex = 21;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "模块名称";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            // 
-            // Column2
-            // 
-            this.Column2.HeaderText = "评估迁移量";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            // 
-            // Column3
-            // 
-            this.Column3.HeaderText = "最早单据日期";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            // 
-            // Column4
-            // 
-            this.Column4.HeaderText = "已迁移数据";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
-            // Columns
-            // 
-            this.Columns.HeaderText = "迁移状态";
-            this.Columns.Name = "Columns";
-            this.Columns.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            this.Column5.HeaderText = "评估";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
-            // 
-            // 迁移
-            // 
-            this.迁移.HeaderText = "迁移";
-            this.迁移.Name = "迁移";
-            this.迁移.ReadOnly = true;
+            this.dgvU9.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvU9_CellClick);
             // 
             // Form3
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1021, 661);
+            this.ClientSize = new System.Drawing.Size(987, 661);
             this.Controls.Add(this.dgvU9);
-            this.Controls.Add(this.btnComputer);
-            this.Controls.Add(this.btnStop);
-            this.Controls.Add(this.btnStart);
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label1);
@@ -211,16 +119,6 @@
         private System.Windows.Forms.DateTimePicker arDate;
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Button btnComputer;
-        private System.Windows.Forms.Button btnStop;
-        private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.DataGridView dgvU9;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Columns;
-        private System.Windows.Forms.DataGridViewButtonColumn Column5;
-        private System.Windows.Forms.DataGridViewButtonColumn 迁移;
     }
 }
