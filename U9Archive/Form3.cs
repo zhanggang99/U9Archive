@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Transactions;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
 using System.Xml;
@@ -22,19 +23,40 @@ namespace U9Archive
         public static bool isMigrate = false;
         public static bool isStop = false;
 
-        public static List<MigrateItem> list = new List<MigrateItem>();
+        //public static List<MigrateItem> list = new List<MigrateItem>();
 
-        public static string currentDbConnectionStr = "data source=.;initial catalog=mx;user id=sa;pwd=yonyou@123";
-        public static string migrateDbConnectionStr = "data source=.;initial catalog=mx_his;user id=sa;pwd=yonyou@123";
+        //public static string currentDbConnectionStr = "data source=UF201080112;initial catalog=gj0407;user id=sa;pwd=ufsoft*123";
+        //public static string migrateDbConnectionStr = "data source=UF201080140;initial catalog=gj0407his;user id=sa;pwd=ufsoft*123";
+
+        public static string currentDbConnectionStr = "data source=zbh;initial catalog=MX;user id=sa;pwd=yonyou@123";
+        public static string migrateDbConnectionStr = "data source=chenzenghui-pc;initial catalog=V6JinpanKongku20170625;user id=sa;pwd=xiangnian2010";
+
+
+        public static string link;
+        public static string db;
 
         public Form3()
         {
             InitializeComponent();
             LoadTree();
             InitDataGridView();
-
+            InitDbList();
         }
 
+        private void InitDbList()
+        {
+            List<string> dblist = new List<string>();
+            SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM dbo.UBF_ARServerInfo", conn);
+            cmd.Connection.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                dblist.Add("[" + dr["LinkName"] + "]:[" + dr["ARDBName"].ToString() + "]");
+            }
+            this.dblist.DataSource = dblist;
+            dr.Close();
+        }
         //加载tree控件树
         private void LoadTree()
         {
@@ -91,7 +113,7 @@ namespace U9Archive
         {
             if (tn.Checked)
             {
-                //todo：加载真实的数据
+                //todo：加载真实的数据  --已完成
                 //MigrateItem item = new MigrateItem { ModuleKey = tn.Name, EarlyDate = "", ModuleName = tn.Name, toMigirateCount = 0, doneMigirateCount = 0, State = "未开始", Evaluate = "评估", Migrate = "迁移", SQLEvaluate = "", BeforeMigrateSql = "", MigrateSql = "", AfterMigrateSql = "" };
                 //string[] row = new string[] { item.ModuleName, item.EarlyDate, item.toMigirateCount.ToString(), item.doneMigirateCount.ToString(), item.State, item.Evaluate, item.Migrate, item.SQLEvaluate, item.BeforeMigrateSql, item.MigrateSql, item.AfterMigrateSql };
 
@@ -150,11 +172,16 @@ namespace U9Archive
                 DataGridViewTextBoxCell AfterMigrateSql = new DataGridViewTextBoxCell();
                 AfterMigrateSql.Value = migrateModle.AfterMigrateSql;
                 dr.Cells.Add(AfterMigrateSql);
-                dgvU9.Rows.Add(dr);
 
-                MigrateItem mm = new MigrateItem { ModuleKey = migrateModle.ModuleKey, EarlyDate = "", ModuleName = migrateModle.ModuleValue, toMigirateCount = 0, doneMigirateCount = 0, State = "未开始", Evaluate = "评估", Migrate = "迁移", SQLEvaluate = migrateModle.MigrateSql, BeforeMigrateSql = migrateModle.BeforeMigrateSql, MigrateSql = migrateModle.MigrateSql, AfterMigrateSql = migrateModle.AfterMigrateSql };
-                if (list.Find(t => t.ModuleName == migrateModle.ModuleValue) ==null )
-                    list.Add(mm);
+                DataGridViewTextBoxCell TableName = new DataGridViewTextBoxCell();
+                TableName.Value = migrateModle.TableName;
+                dr.Cells.Add(TableName);
+
+
+                dgvU9.Rows.Add(dr);
+                //MigrateItem mm = new MigrateItem { ModuleKey = migrateModle.ModuleKey, EarlyDate = "", ModuleName = migrateModle.ModuleValue, toMigirateCount = 0, doneMigirateCount = 0, State = "未开始", Evaluate = "评估", Migrate = "迁移", SQLEvaluate = migrateModle.MigrateSql, BeforeMigrateSql = migrateModle.BeforeMigrateSql, MigrateSql = migrateModle.MigrateSql, AfterMigrateSql = migrateModle.AfterMigrateSql };
+                //if (list.Find(t => t.ModuleName == migrateModle.ModuleValue) ==null )
+                //    list.Add(mm);
 
                 return;
             }
@@ -162,40 +189,55 @@ namespace U9Archive
         }
         private void InitDataGridView()
         {
+            this.dgvU9.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+
             DataGridViewTextBoxColumn ModuleName = new DataGridViewTextBoxColumn();
             ModuleName.HeaderText = "模块名称";
+            ModuleName.FillWeight = 10;
 
             DataGridViewTextBoxColumn EarlyDate = new DataGridViewTextBoxColumn();
             EarlyDate.HeaderText = "单据最早日期";
+            EarlyDate.FillWeight = 10;
 
             DataGridViewTextBoxColumn toMigirateCount = new DataGridViewTextBoxColumn();
             toMigirateCount.HeaderText = "评估数量";
+            toMigirateCount.FillWeight = 10;
 
             DataGridViewTextBoxColumn doneMigirateCount = new DataGridViewTextBoxColumn();
             doneMigirateCount.HeaderText = "已迁移数量";
+            doneMigirateCount.FillWeight = 10;
 
             DataGridViewTextBoxColumn State = new DataGridViewTextBoxColumn();
             State.HeaderText = "归档状态";
+            State.FillWeight = 30;
 
             DataGridViewDisableButtonColumn Evaluate = new DataGridViewDisableButtonColumn();
             Evaluate.HeaderText = "评估";
+            Evaluate.FillWeight = 10;
 
             DataGridViewDisableButtonColumn Migrate = new DataGridViewDisableButtonColumn();
-            Migrate.HeaderText = "评估";
-
+            Migrate.HeaderText = "迁移";
+            Migrate.FillWeight = 10;
 
             DataGridViewTextBoxColumn EvaluateSql = new DataGridViewTextBoxColumn();
             EvaluateSql.HeaderText = "EvaluateSql";
+            EvaluateSql.Visible = false;
 
             DataGridViewTextBoxColumn BeforeMigrateSql = new DataGridViewTextBoxColumn();
             BeforeMigrateSql.HeaderText = "BeforeMigrateSql";
+            BeforeMigrateSql.Visible = false;
 
             DataGridViewTextBoxColumn MigrateSql = new DataGridViewTextBoxColumn();
             MigrateSql.HeaderText = "MigrateSql";
+            MigrateSql.Visible = false;
 
             DataGridViewTextBoxColumn AfterMigrateSql = new DataGridViewTextBoxColumn();
             AfterMigrateSql.HeaderText = "AfterMigrateSql";
+            AfterMigrateSql.Visible = false;
 
+            DataGridViewTextBoxColumn TableName = new DataGridViewTextBoxColumn();
+            TableName.HeaderText = "主表";
+            TableName.Visible = false;
 
             dgvU9.Columns.Add(ModuleName);
             dgvU9.Columns.Add(EarlyDate);
@@ -208,6 +250,7 @@ namespace U9Archive
             dgvU9.Columns.Add(BeforeMigrateSql);
             dgvU9.Columns.Add(MigrateSql);
             dgvU9.Columns.Add(AfterMigrateSql);
+            dgvU9.Columns.Add(TableName);
 
         }
         //动态删除行
@@ -217,11 +260,20 @@ namespace U9Archive
             {
                 for (int i = 0; i < dgvU9.Rows.Count; i++)
                 {
+                    if (true)
+                    {
+                        //判断在删除时，是否已开始迁移，如果是，则退出，不允许删除行
+                        if (dgvU9.Rows[i].Cells[4].Value.ToString() != "未开始")
+                            return;
+                    }
+                }
+                for (int i = 0; i < dgvU9.Rows.Count; i++)
+                {
                     if (dgvU9.Rows[i].Cells[0].Value != null && dgvU9.Rows[i].Cells[0].Value.ToString() == tn.Name)
                     {
                         dgvU9.Rows.RemoveAt(i);
-                        list.Remove(list.Find(t => t.ModuleName == tn.Name));
                         return;
+                        //list.Remove(list.Find(t => t.ModuleName == tn.Name));
                     }
                 }
             }
@@ -247,43 +299,78 @@ namespace U9Archive
         {
             if (e.ColumnIndex == 5)//评估
             {
+                if (migrateDate.Value > System.DateTime.Now.AddMonths(-0))
+                {
+                    MessageBox.Show("只能迁移6月以前数据");
+                    return;
+                }
+
                 if (((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[5]).Enabled)
                 {
-                    string SQLEvaluate = dgvU9[8, e.RowIndex].Value.ToString();
-                    // string SQLMigrate = dgvU9[9, e.RowIndex].Value.ToString();
+
+                    string evaluateSql = dgvU9[7, e.RowIndex].Value.ToString();
                     this.dgvU9[4, e.RowIndex].Value = "评估中...";
+                  
+                    // list.Find(t => t.ModuleName == this.dgvU9.Rows[e.RowIndex].Cells[0].Value.ToString()).State = "评估中...";
                     ((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[6]).Enabled = false;
-                    Evaluate(SQLEvaluate, e.RowIndex);
+
+                    Evaluate(evaluateSql, e.RowIndex, migrateDate.Value);
                 }
             }
             else if (e.ColumnIndex == 6)//迁移
             {
-                if (!((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[6]).Enabled)//此时正在评估，则不能做迁移
+                if (migrateDate.Value > System.DateTime.Now.AddMonths(-0))
+                {
+                    MessageBox.Show("只能迁移6月以前数据");
                     return;
-                //开始迁移后，评估不应该再响应事件
+                }
+                if (dblist.SelectedItem == null || dblist.SelectedValue.ToString().Split(':').Length != 2)
+                {
+                    MessageBox.Show("没有可迁移到历史库");
+                    return;
+                }
+                link = dblist.SelectedValue.ToString().Split(':')[0];
+                db = dblist.SelectedValue.ToString().Split(':')[1];
+
+                isStop = false;
+                if (!((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[6]).Enabled || this.dgvU9[4, e.RowIndex].Value.ToString() == "评估中...")//此时正在评估，则不能做迁移
+                    return;
+                //开始迁移后，不在响应评估事件
                 ((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[5]).Enabled = false;
 
-                this.dgvU9[4, e.RowIndex].Value = "评估中...";
-                string evaluateSql = dgvU9[8, e.RowIndex].Value.ToString();
-                string beforeMigrateSql = dgvU9[9, e.RowIndex].Value.ToString();
-                string migrateSql = "";
-                string afterMigrateSql = "";
-
-                //如果在迁移前，没有估过，则要做一次评估。EvaluateResult result;
-                if (this.dgvU9[4, e.RowIndex].Value.ToString() != "评估完成")
-                    MigrateWithEvluate(evaluateSql, beforeMigrateSql, migrateSql, afterMigrateSql,e.RowIndex);
-                else
-                    Migrate(beforeMigrateSql, migrateSql, afterMigrateSql,e.RowIndex);
+                if (this.dgvU9.Rows[e.RowIndex].Cells[6].Value.ToString() == "中止")
+                {
+                    this.dgvU9.Rows[e.RowIndex].Cells[6].Value = "中止..";
+                    this.dgvU9.Rows[e.RowIndex].Cells[4].Value = "迁移中止...";
+                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[e.RowIndex].Cells[6]).Enabled = false;
+                }
+                else if (this.dgvU9.Rows[e.RowIndex].Cells[6].Value.ToString() == "迁移")
+                {
+                    //开始迁移后，迁移按钮则变成 暂停 ，如果用户点击了暂停，则迁移过程停止。
+                    this.dgvU9.Rows[e.RowIndex].Cells[6].Value = "中止";
+                    string evaluateSql = dgvU9[7, e.RowIndex].Value.ToString();
+                    string beforeMigrateSql = dgvU9[8, e.RowIndex].Value.ToString();
+                    string migrateSql = dgvU9[9, e.RowIndex].Value.ToString();
+                    string afterMigrateSql = dgvU9[10, e.RowIndex].Value.ToString();
+                    string tableName = dgvU9[11, e.RowIndex].Value.ToString();
+                    //如果在迁移前，没有估过，则要做一次评估。EvaluateResult result;
+                    if (this.dgvU9[4, e.RowIndex].Value.ToString() != "评估完成")//   此后后续调试，发现并非如此,list先不用了：异步取Ui数据仍是旧值，换为从List取值。
+                                                                             //if(list.Find(t=>t.ModuleName == this.dgvU9[0,e.RowIndex].Value.ToString()).State== "评估完成")
+                        MigrateWithEvluate(evaluateSql, beforeMigrateSql, migrateSql, afterMigrateSql, e.RowIndex, migrateDate.Value, link, db, tableName);
+                    else
+                        Migrate(beforeMigrateSql, migrateSql, afterMigrateSql, e.RowIndex, migrateDate.Value, link, db, tableName);
+                }
             }
         }
-        private void Evaluate(string Evaluatesql, int rowindex)
+        private void Evaluate(string Evaluatesql, int rowindex, DateTime dt)
         {
             EvaluateResult result;
+            this.dgvU9[4, rowindex].Style.ForeColor = Color.Black;
             Task.Run(() =>
             {
                 try
                 {
-                    result = ExecEvaluateSQL(Evaluatesql);
+                    result = ExecEvaluateSQL(Evaluatesql, dt);
                     UpdateCount(result, rowindex);
                 }
                 catch (Exception ex)
@@ -291,134 +378,236 @@ namespace U9Archive
                     UpdateCountError(ex.Message, rowindex);
                     return;
                 }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
-                }
             });
         }
-        private void Migrate(string BeforeMigrateSql, string migrateSql, string afterMigrateSql, int rowindex)
+        private void Migrate(string BeforeMigrateSql, string migrateSql, string afterMigrateSql, int rowindex, DateTime dt, string link, string db, string tb)
         {
             MigrateResult result;
+
+            bool isError = false;
+            string errorMeg = "";
+            this.dgvU9[4, rowindex].Style.ForeColor = Color.Black;
             Task.Run(() =>
             {
                 try
                 {
-                    result = ExecBeforeMigrateSQL(BeforeMigrateSql);
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                            this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                        else
+                            this.dgvU9[4, rowindex].Value = "迁移准备...";
+
+                    }));
+                    result = ExecBeforeMigrateSQL(BeforeMigrateSql, dt, link, db);
                     UpdateBeforeMigrateCount(result, rowindex);
                 }
                 catch (Exception ex)
                 {
                     UpdateBeforeMigrateCountError(ex.Message, rowindex);
+                    isError = true;
+                    errorMeg = ex.Message;
                     return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
                 }
             }).ContinueWith(t =>
             {
+                if (isError)
+                    return;
                 try
                 {
-                    result = ExecMigrateSQL(migrateSql);
-                    UpdateMigrateCount(result, rowindex);
+                    BeginInvoke(new Action(() =>
+                    {
+                        if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                            this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                        else
+                            this.dgvU9[4, rowindex].Value = "迁移进行...";
+
+                    }));
+
+                    int i = 0;
+                    string sqlGetCount = "select count(*) from ##" + tb;
+
+                    SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+                    SqlCommand cmd = new SqlCommand(sqlGetCount, conn);
+                    cmd.Connection.Open();
+                    object obj = cmd.ExecuteScalar();
+                    int rowCount = (int)obj;
+                    while (rowCount> 0)
+                    {
+                        if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                            return;
+                        result = ExecMigrateSQL(migrateSql, dt, link, db);
+                        rowCount = rowCount - result.MigrateCount;
+                        UpdateMigrateCount(result, rowindex);
+                    }
+
+
                 }
                 catch (Exception ex)
                 {
                     UpdateMigrateCountCountError(ex.Message, rowindex);
+                    isError = true;
+                    errorMeg = ex.Message;
                     return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
                 }
             }).ContinueWith(tt =>
             {
+
+                //if (isError)  可能有一些要启用索引的操作，这里暂时还要要执行
+                //    return;
                 try
-                {
-                    result = ExecAfterMigrateSQL(afterMigrateSql); 
-                    UpdateAfterMigrateCount(result, rowindex);
+            {
+                    if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                    {
+                        BeginInvoke(new Action(() =>
+                        {
+                            if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                            {
+                                 this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                            }
+                            else if (isError)
+                                this.dgvU9[4, rowindex].Value = errorMeg;
+                            else
+                                this.dgvU9[4, rowindex].Value = "迁移结束...";
+                        }));
+                    }
+
+                    result = ExecAfterMigrateSQL(afterMigrateSql);
+                    UpdateAfterMigrateCount(result, rowindex,isError,errorMeg);
                 }
                 catch (Exception ex)
                 {
                     UpdateAfterMigrateCountError(ex.Message, rowindex);
                     return;
                 }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
-                }
             });
 
         }
-        private void MigrateWithEvluate(string Evaluatesql, string BeforeMigrateSql, string migrateSql, string afterMigrateSql, int rowindex)
+        private void MigrateWithEvluate(string Evaluatesql, string beforeMigrateSql, string migrateSql, string afterMigrateSql, int rowindex, DateTime dt, string link, string db, string tb)
         {
             EvaluateResult result;
-            MigrateResult result2;
+            //MigrateResult result2;
+            bool isError = false;
+            string errorMeg = "";
+
             Task.Run(() =>
             {
                 try
                 {
-                    result = ExecEvaluateSQL(Evaluatesql);
+                    BeginInvoke(new Action(() =>
+                    {
+                        this.dgvU9[4, rowindex].Value = "评估开始...";
+
+                    }));
+                    result = ExecEvaluateSQL(Evaluatesql, dt);
                     UpdateCount(result, rowindex);
                 }
                 catch (Exception ex)
                 {
                     UpdateCountError(ex.Message, rowindex);
+                    isError = true;
+                    errorMeg = ex.Message;
                     return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
                 }
             }).ContinueWith(t =>
             {
-                try
-                {
-                    result2 = ExecBeforeMigrateSQL(BeforeMigrateSql);
-                    UpdateBeforeMigrateCount(result2, rowindex);
-                }
-                catch (Exception ex)
-                {
-                    UpdateBeforeMigrateCountError(ex.Message, rowindex);
+                if (isError)
                     return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
-                }
-            }).ContinueWith(t =>
-            {
-                try
-                {
-                    result2 = ExecMigrateSQL(migrateSql);
-                    UpdateMigrateCount(result2, rowindex);
-                }
-                catch (Exception ex)
-                {
-                    UpdateMigrateCountCountError(ex.Message, rowindex);
-                    return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
-                }
-            }).ContinueWith(tt =>
-            {
-                try
-                {
-                    result2 = ExecAfterMigrateSQL(afterMigrateSql);
-                    UpdateAfterMigrateCount(result2, rowindex);
-                }
-                catch (Exception ex)
-                {
-                    UpdateAfterMigrateCountError(ex.Message, rowindex);
-                    return;
-                }
-                finally
-                {
-                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
-                }
+                Migrate(beforeMigrateSql, migrateSql, afterMigrateSql, rowindex, dt, link, db, tb);
+
+                #region 重构支队
+                //    try
+                //    {
+                //        if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //            return;
+                //        BeginInvoke(new Action(() =>
+                //        {
+                //            if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //                this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                //            else
+                //                this.dgvU9[4, rowindex].Value = "迁移准备...";
+
+                //        }));
+                //        result2 = ExecBeforeMigrateSQL(BeforeMigrateSql, dt, link, db);
+                //        UpdateBeforeMigrateCount(result2, rowindex);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        UpdateBeforeMigrateCountError(ex.Message, rowindex);
+                //        isError = true;
+                //        errorMeg = ex.Message;
+                //        return;
+                //    }
+                //}).ContinueWith(t =>
+                //{
+                //    if (isError)
+                //        return;
+                //    try
+                //    {
+                //        BeginInvoke(new Action(() =>
+                //        {
+                //            if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //                this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                //            else
+                //                this.dgvU9[4, rowindex].Value = "迁移进行...";
+
+                //        }));
+
+                //        int i = 0;
+                //        while (i < 3)
+                //        {
+                //            if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //                return;
+                //            result2 = ExecMigrateSQL(migrateSql, dt, link, db);
+                //            UpdateMigrateCount(result2, rowindex);
+                //            i++;
+                //        }
+
+
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        UpdateMigrateCountCountError(ex.Message, rowindex);
+                //        isError = true;
+                //        errorMeg = ex.Message;
+                //        return;
+                //    }
+                //}).ContinueWith(tt =>
+                //{
+                //    //if (isError)  可能有一些要启用索引的操作，这里暂时还要要执行
+                //    //    return;
+                //    try
+                //    {
+
+                //        if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //        {
+
+                //            BeginInvoke(new Action(() =>
+                //            {
+                //                if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                //                {
+                //                    this.dgvU9.Rows[rowindex].Cells[6].Value = "迁移";
+                //                    this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移已中止";
+                //                    ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
+
+                //                }
+                //                else if (isError)
+                //                    this.dgvU9[4, rowindex].Value = errorMeg;
+                //                else
+                //                    this.dgvU9[4, rowindex].Value = "迁移结束...";
+                //            }));
+                //            return;
+                //        }
+
+                //        result2 = ExecAfterMigrateSQL(afterMigrateSql);
+                //        UpdateAfterMigrateCount(result2, rowindex,isError, errorMeg);
+                //    }
+                //    catch (Exception ex)
+                //    {
+                //        UpdateAfterMigrateCountError(ex.Message, rowindex);
+                //        return;
+                //    }
+#endregion
             });
 
         }
@@ -429,16 +618,19 @@ namespace U9Archive
                 this.dgvU9[1, rowindex].Value = result.date;
                 this.dgvU9[2, rowindex].Value = result.Evaluatecount.ToString();
                 this.dgvU9[4, rowindex].Value = "评估完成";
+                this.dgvU9[3, rowindex].Value = "0";
+                this.dgvU9[4, rowindex].Style.ForeColor = Color.Green;
 
-                MigrateItem item= list.Find(t => t.ModuleName == this.dgvU9[0, rowindex].Value.ToString());
-                if (item!=null)
-                {
-                    item.State = "评估完成"; 
-                    item.EarlyDate= result.date;
-                    item.toMigirateCount = result.Evaluatecount;
-                }
+                //MigrateItem item = list.Find(t => t.ModuleName == this.dgvU9[0, rowindex].Value.ToString());
+                //if (item!=null)
+                //{
+                //    item.State = "评估完成"; 
+                //    item.EarlyDate= result.date;
+                //    item.toMigirateCount = result.Evaluatecount;
+                //}
 
                 ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
             }));
         }
 
@@ -447,7 +639,16 @@ namespace U9Archive
             BeginInvoke(new Action(() =>
             {
                 this.dgvU9[4, rowindex].Value = err;
+                this.dgvU9[4, rowindex].Style.ForeColor = Color.Red;
+
                 ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
+                //MigrateItem item = list.Find(t => t.ModuleName == this.dgvU9[0, rowindex].Value.ToString());
+                //if (item != null)
+                //{
+                //    item.State = "评估出错";
+                //}
+
             }));
         }
 
@@ -456,8 +657,10 @@ namespace U9Archive
         {
             BeginInvoke(new Action(() =>
             {
-                this.dgvU9[4, rowindex].Value = "准备工作完成";
-
+                if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                    this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                else
+                    this.dgvU9[4, rowindex].Value = "迁移准备成功";
             }));
         }
 
@@ -466,7 +669,10 @@ namespace U9Archive
             BeginInvoke(new Action(() =>
             {
                 this.dgvU9[4, rowindex].Value = err;
+                this.dgvU9[4, rowindex].Style.ForeColor = Color.Red;
 
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
             }));
         }
 
@@ -474,8 +680,13 @@ namespace U9Archive
         {
             BeginInvoke(new Action(() =>
             {
-                this.dgvU9[4, rowindex].Value = "迁移执行中...";
-
+                if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                    this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移中止...";
+                else
+                {
+                    this.dgvU9[4, rowindex].Value = "迁移进行...";
+                    this.dgvU9[3, rowindex].Value = ( Convert.ToInt32(this.dgvU9[3, rowindex].Value)+ result.MigrateCount).ToString();
+                }
             }));
         }
 
@@ -484,16 +695,41 @@ namespace U9Archive
             BeginInvoke(new Action(() =>
             {
                 this.dgvU9[4, rowindex].Value = err;
+                this.dgvU9[4, rowindex].Style.ForeColor = Color.Red;
+
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
+
 
             }));
         }
 
 
-        private void UpdateAfterMigrateCount(MigrateResult result, int rowindex)
+        private void UpdateAfterMigrateCount(MigrateResult result, int rowindex,bool isError,string errMsg)
         {
             BeginInvoke(new Action(() =>
             {
-                this.dgvU9[4, rowindex].Value = "迁移完成";
+                if (this.dgvU9.Rows[rowindex].Cells[6].Value.ToString() == "中止..")
+                {
+                    this.dgvU9.Rows[rowindex].Cells[6].Value = "迁移";
+                    this.dgvU9.Rows[rowindex].Cells[4].Value = "迁移已中止";
+                }
+                else if(isError)
+                {
+                    this.dgvU9[4, rowindex].Value = errMsg;
+                    this.dgvU9[4, rowindex].Style.ForeColor = Color.Red;
+                    this.dgvU9.Rows[rowindex].Cells[6].Value = "迁移";
+                }
+                else
+                {
+                    this.dgvU9[4, rowindex].Value = "迁移结束";
+                    this.dgvU9[4, rowindex].Style.ForeColor = Color.Green;
+                    this.dgvU9.Rows[rowindex].Cells[6].Value = "迁移";
+                }
+                
+
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
 
             }));
         }
@@ -503,52 +739,103 @@ namespace U9Archive
             BeginInvoke(new Action(() =>
             {
                 this.dgvU9[4, rowindex].Value = err;
+                this.dgvU9[4, rowindex].Style.ForeColor = Color.Red;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[5]).Enabled = true;
+                ((DataGridViewDisableButtonCell)this.dgvU9.Rows[rowindex].Cells[6]).Enabled = true;
+                this.dgvU9.Rows[rowindex].Cells[6].Value = "迁移";
 
             }));
         }
 
-
-
-
-
-        private EvaluateResult ExecEvaluateSQL(string sql)
+        private EvaluateResult ExecEvaluateSQL(string sql, DateTime dt)
         {
-            var rand = new Random();
-            Thread.Sleep(rand.Next(500, 5000));
+            SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+            SqlCommand cmd = new SqlCommand(sql + " '" + migrateDate.Value + "'", conn);
+            cmd.Connection.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            string dateTime = "1900-00-00";
+            string count = "";
+            if (dr.Read())
+            {
+                dateTime = ((DateTime)dr["CreatedOn"]).ToString("yyyy-MM-dd");
+                count = dr["Count"].ToString();
+            }
+            dr.Close();
 
-            return new EvaluateResult { date = "2016-61-61", Evaluatecount = rand.Next(300, 3000) };
+            return new EvaluateResult { date = dateTime, Evaluatecount = count };
         }
 
-        private MigrateResult ExecBeforeMigrateSQL(string sql)
+        private MigrateResult ExecBeforeMigrateSQL(string sql, DateTime dt, string link, string db)
         {
-            var rand = new Random();
-            Thread.Sleep(rand.Next(500, 5000));
+            SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+            SqlCommand cmd = new SqlCommand(sql, conn);// +" '" + migrateDate.Value.ToString("yyyy-MM-dd HH:mm:ss") + "'," + " '" + link + "'," + " '" + db + "'", conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            var paramters = new[]
+            {
+                new SqlParameter("@LinkServer",link),new SqlParameter("@ARDBName",db), new SqlParameter("@ardate", migrateDate.Value)
+            };
 
-            return new MigrateResult { MigrateCount = rand.Next(300, 3000) };
+            for (int i = 0; i < paramters.Length; i++)
+            {
+                cmd.Parameters.Add(paramters[i]);
+            }
+
+            cmd.Connection.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            int count = -1;
+            if (dr.Read())
+            {
+                count = (int)dr["result"];
+            }
+            dr.Close();
+
+            return new MigrateResult { MigrateCount = count };
         }
 
-        private MigrateResult ExecMigrateSQL(string sql)
+        private MigrateResult ExecMigrateSQL(string sql, DateTime dt, string link, string db)
         {
-            var rand = new Random();
-            Thread.Sleep(rand.Next(500, 5000));
+            int count = -1;
+            SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+            SqlCommand cmd = new SqlCommand(sql + " '" + link + "', " + " '" + db + "'", conn);
+            
+            try
+            {
+                SqlDataReader dr;
+                cmd.Connection.Open();
+                dr = cmd.ExecuteReader();
 
-            return new MigrateResult { MigrateCount = rand.Next(300, 3000) };
+                if (dr.Read())
+                {
+                    count = (int)dr["result"];
+                }
+                dr.Close();
+            }
+            catch
+            {
+                throw;
+            }
+            return new MigrateResult { MigrateCount = count };
         }
 
         private MigrateResult ExecAfterMigrateSQL(string sql)
         {
-            var rand = new Random();
-            Thread.Sleep(rand.Next(500, 5000));
-
-            return new MigrateResult { MigrateCount = rand.Next(300, 3000) };
+            SqlConnection conn = new SqlConnection(currentDbConnectionStr);
+            SqlCommand cmd = new SqlCommand(sql,conn);
+            cmd.Connection.Open();
+            cmd.ExecuteNonQuery();
+            return new MigrateResult { MigrateCount = 0 };
         }
 
+        private void btn_stop_Click(object sender, EventArgs e)
+        {
+            isStop = true;
+        }
     }
 
     public class EvaluateResult
     {
         public string date { get; set; }
-        public int Evaluatecount { get; set; }
+        public string Evaluatecount { get; set; }
     }
     public class MigrateResult
     {
@@ -680,6 +967,10 @@ namespace U9Archive
                 if (node.Attributes["AfterMigrateSql"] != null)
                     sp.AfterMigrateSql = node.Attributes["AfterMigrateSql"].Value;
 
+
+                if (node.Attributes["TableName"] != null)
+                    sp.TableName = node.Attributes["TableName"].Value;
+
                 MigrateModules.Add(sp);
             }
         }
@@ -704,6 +995,7 @@ namespace U9Archive
         public string BeforeMigrateSql { get; set; }
         public string MigrateSql { get; set; }
         public string AfterMigrateSql { get; set; }
+        public string TableName { get; set; }
 
     }
 
@@ -722,6 +1014,7 @@ namespace U9Archive
         public string BeforeMigrateSql { get; set; }
         public string MigrateSql { get; set; }
         public string AfterMigrateSql { get; set; }
+        public string TableName { get; set; }
 
 
     }

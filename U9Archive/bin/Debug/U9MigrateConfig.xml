@@ -1,21 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <MigrateRoot>
   <MigrateItems>
-    <MigrateItem ModuleKey="PM" ModuleValue="PM模块" Module="供应链" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""    />
-    <MigrateItem ModuleKey="SM" ModuleValue="SM模块" Module="供应链" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="IC" ModuleValue="IC模块" Module="成本管理" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="SFC" ModuleValue="SFC模块" Module="生产制造" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="AR" ModuleValue="AR模块" Module="财务" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="CA" ModuleValue="CA模块" Module="成本管理" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="TB" ModuleValue="TB模块" Module="财务" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="AAI" ModuleValue="AAI模块" Module="成本管理" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="InvTrans" ModuleValue="InvTrans模块" Module="成本管理" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="INV" ModuleValue="INV模块" Module="供应链" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="AP" ModuleValue="AP模块" Module="财务" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="MRP" ModuleValue="MRP模块" Module="生产制造" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="MO" ModuleValue="MO模块" Module="生产制造" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
-    <MigrateItem ModuleKey="UBF" ModuleValue="UBF模块" Module="系统管理" EvaluateSql="select 1 " BeforeMigrateSql="select 2 " MigrateSql=" select 3 "  AfterMigrateSql=" select 4 "  />
-    <MigrateItem ModuleKey="WorkFlow" ModuleValue="WorkFlow模块" Module="系统管理" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""  />
+    <MigrateItem ModuleKey="PM" Module="供应链" ModuleValue="PM模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""    TableName=""/>
+    <MigrateItem ModuleKey="SM" Module="供应链" ModuleValue="SM模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="IC" Module="成本管理" ModuleValue="IC模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="SFC" Module="生产制造" ModuleValue="SFC模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="AR" Module="财务"  ModuleValue="AR模块" EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="CA" Module="成本管理" ModuleValue="CA模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="TB" Module="财务" ModuleValue="TB模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="AAI" Module="成本管理" ModuleValue="AAI模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="InvTrans" Module="成本管理" ModuleValue="InvTrans模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="INV" Module="供应链" ModuleValue="INV模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="AP" Module="财务" ModuleValue="AP模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="MRP" Module="生产制造" ModuleValue="MRP模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+    <MigrateItem ModuleKey="MO" Module="生产制造" ModuleValue="MO模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName="MO_MO"/>
+    <MigrateItem ModuleKey="UBF" Module="系统管理" ModuleValue="UBF模块"  EvaluateSql="select 1 " BeforeMigrateSql="select 2 " MigrateSql=" select 3 "  AfterMigrateSql=" select 4 "  TableName="" />
+    <MigrateItem ModuleKey="UBF" Module="系统管理" ModuleValue="操作日志"  EvaluateSql="UBF_Evaluateoperatelog" BeforeMigrateSql="UBF_BeforeMigrateperatelog" MigrateSql=" UBF_Migrateoperatelog"  AfterMigrateSql="UBF_AfterMigrateoperatelog" TableName="ubf_log_operatelog" />
+    <MigrateItem ModuleKey="UBF" Module="系统管理" ModuleValue="调度日志"  EvaluateSql="UBF_Evaluateoperatelog" BeforeMigrateSql="UBF_BeforeMigrateperatelog" MigrateSql=" UBF_Migrateoperatelog"  AfterMigrateSql="UBF_AfterMigrateoperatelog" TableName="ubf_Request_job" />
+    
+    <MigrateItem ModuleKey="WorkFlow" Module="系统管理" ModuleValue="WorkFlow模块"  EvaluateSql="" BeforeMigrateSql="" MigrateSql=""  AfterMigrateSql=""   TableName=""/>
+  
    </MigrateItems>
   <MigrateCustomConfigurations>
     <Item Key="IsTest" Value="false" />
